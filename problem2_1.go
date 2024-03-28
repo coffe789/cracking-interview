@@ -18,31 +18,45 @@ func DeleteDuplicates(ll Node) Node {
   return ll
 }
 
-func partition(lo, hi *Node) (*Node, *Node) {
+func partition(lo, hi *Node) (*Node, *Node, *Node) {
   pivot := hi
   
-  for curr := lo; ; curr = curr.next {
+  prev := lo
+  for curr := lo.next; curr != nil ; curr = curr.next {
     if curr.value > pivot.value {
       // Move curr to end
-      tmp := curr
-      curr = curr.next
-      hi.next = tmp
-      hi = tmp
-    }
-    if curr.next == pivot {
-      return curr, pivot // Also return Node before pivot to use as next hi
+      if curr == lo {
+        lo = curr.next
+      }
+
+      prev.next = curr.next
+      hi.next = curr
+      curr.next = nil
+      hi = curr
+      curr = prev
+    } else {
+      prev = curr
     }
   }
+
+  prev = lo
+  for curr := lo.next; curr != nil ; curr = curr.next {
+    if curr == pivot {
+      return lo, prev, pivot
+    }
+  }
+  return nil, nil, nil // This should never happen
 }
 
 func qs(lo, hi *Node) *Node {
-  if lo == hi || lo == nil {
+  if lo == hi || lo == nil || hi == nil {
     return lo
   }
 
-  prePivot, pivot := partition(lo, hi)
-  qs(lo, prePivot)
-  qs(pivot.next, hi)
+  lo, prePivot, pivot := partition(lo, hi)
+
+  lo = qs(lo, prePivot)
+  lo = qs(pivot.next, hi)
 
   return lo
 }
@@ -56,7 +70,7 @@ func DeleteDuplicates2(ll *Node) *Node {
   }
 
   previous := ll
-  for curr := ll.next; curr != nil ; curr = curr.next {
+  for curr := ll.next; curr != nil; curr = curr.next {
     if curr.value == curr.next.value {
       // Erase curr
       previous.next = curr.next
