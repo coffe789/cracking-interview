@@ -28,4 +28,3 @@ func TestDetectLoop(t *testing.T) {
     t.Errorf("Incorrect loop detection")
   }
 }
-  

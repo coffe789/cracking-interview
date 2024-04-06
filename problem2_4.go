@@ -1,7 +1,5 @@
 package cracking_interview
 
-// import "fmt"
-
 func partitionLL(lo, hi *Node) (*Node, *Node) {
   pivot := hi
   
