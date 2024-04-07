@@ -33,6 +33,7 @@ func URLify(s string, l int) string {
 }
 
 // This does not work because you cannot resize an array of runes
+// Note - I attempted this problem before I learned how to use slices
 func URLifyInPlace(s []rune) []rune {
   space_count := 0
   for i := range(len(s)) {

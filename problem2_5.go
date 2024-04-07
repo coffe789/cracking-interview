@@ -30,7 +30,7 @@ func sumLL(ll1, ll2 *Node) *Node {
   // Add last index to the head of ret
   ret := &Node{value: strIdx2Int(n3_str, len(n3_str) - 1), next: nil}
 
-  // Add remaining indexes to tail
+  // Add remaining indices to tail
   curr := ret
   for i := len(n3_str) - 2; i >= 0; i -= 1 {
     curr.next = &Node{value: strIdx2Int(n3_str, i), next: nil}
